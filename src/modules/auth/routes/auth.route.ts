@@ -3,22 +3,31 @@ import type { Request, Response } from "express";
 import { validate } from "../../../middlewares/validate-zod.js";
 import { registerUserSchema } from "../dto/register-user.dto.js";
 import {
+  authRepository,
   MakeLoginController,
+  MakeProfileController,
   MakeRegisterController,
 } from "../design/factory-auth-route.js";
+import { protectAuth } from "middlewares/protectAuth.js";
+import { asyncHandler } from "middlewares/async-handler.js";
 const router = express.Router();
 
-const makeRegisterController = MakeRegisterController();
-const makeLoginController = MakeLoginController();
+const registerController = MakeRegisterController();
+const loginController = MakeLoginController();
+const profileController = MakeProfileController();
 
 router.post(
   "/register",
   validate(registerUserSchema),
-  (req: Request, res: Response) => makeRegisterController.handle(req, res),
+  asyncHandler(registerController.handle),
 );
 
-router.post("/login", (req: Request, res: Response) =>
-  makeLoginController.handle(req, res),
+router.post("/login", asyncHandler(loginController.handle));
+
+router.get(
+  "/profile",
+  protectAuth(authRepository),
+  asyncHandler(profileController.handle),
 );
 
 export { router as authRoutes };

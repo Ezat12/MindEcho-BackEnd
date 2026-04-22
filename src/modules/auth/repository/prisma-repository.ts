@@ -12,6 +12,14 @@ export class PrismaAuthRepository implements IAuthRepository {
     });
   }
 
+  findById(id: string): Promise<User | null> {
+    return prisma.users.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
   register(data: RegisterUserDTO): Promise<User> {
     const { name, email, password, bio, avatarUrl, role } = data;
 

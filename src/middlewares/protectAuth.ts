@@ -3,10 +3,10 @@ import { AppError } from "../shared/errors/app-error.js";
 import jwt from "jsonwebtoken";
 import { env } from "../config/env.js";
 import type { IAuthRepository } from "../modules/auth/repository/auth-repository.js";
+import { asyncHandler } from "./async-handler.js";
 
-export const protectAuth =
-  (authRepository: IAuthRepository) =>
-  async (req: Request, res: Response, next: NextFunction) => {
+export const protectAuth = (authRepository: IAuthRepository) =>
+  asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     const authToken = req.headers.authorization;
 
     if (!authToken) {
@@ -27,7 +27,7 @@ export const protectAuth =
       throw new AppError("Invalid token", 401);
     }
 
-    const user = await authRepository.findByEmail(decodedToken.email);
+    const user = await authRepository.findById(decodedToken.id);
 
     if (!user) {
       throw new AppError("User not found", 404);
@@ -36,4 +36,4 @@ export const protectAuth =
     req.user = user;
 
     next();
-  };
+  });

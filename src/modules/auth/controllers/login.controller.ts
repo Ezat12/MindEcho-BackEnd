@@ -2,7 +2,9 @@ import type { LoginService } from "../services/login.service.js";
 import type { Request, Response } from "express";
 
 export class LoginController {
-  constructor(private readonly loginService: LoginService) {}
+  constructor(private readonly loginService: LoginService) {
+    this.handle = this.handle.bind(this);
+  }
 
   async handle(req: Request, res: Response) {
     const { email, password } = req.body;
