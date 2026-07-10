@@ -17,7 +17,7 @@ export class PrismaMoodRepository implements MoodRepository {
 
   async addMood(mood: Mood): Promise<void> {
     const data = {
-      id: mood.id,
+
       name: mood.name,
       slug: mood.slug,
       icon: mood.icon || null,

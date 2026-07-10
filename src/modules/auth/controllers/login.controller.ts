@@ -9,8 +9,17 @@ export class LoginController {
   async handle(req: Request, res: Response) {
     const { email, password } = req.body;
 
-    const { user, token } = await this.loginService.execute(email, password);
+    const { user, accessToken, refreshToken } = await this.loginService.execute(
+      email,
+      password,
+    );
 
-    res.status(200).json({ status: "success", data: user, token });
+    res
+      .status(200)
+      .cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+      })
+      .json({ status: "success", data: user, accessToken });
   }
 }

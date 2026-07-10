@@ -9,8 +9,8 @@ export class RegisterController {
   async handle(req: Request, res: Response) {
     const data = req.body;
 
-    const { registeredUser, token } = await this.registerService.execute(data);
+    const { registeredUser, accessToken, refreshToken } = await this.registerService.execute(data);
 
-    res.status(201).json({ status: "success", data: registeredUser, token });
+    res.status(201).json({ status: "success", data: registeredUser, accessToken, refreshToken });
   }
 }

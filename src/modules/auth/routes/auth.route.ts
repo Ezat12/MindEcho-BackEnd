@@ -5,7 +5,9 @@ import { registerUserSchema } from "../dto/register-user.dto.js";
 import {
   authRepository,
   MakeLoginController,
+  MakeLogoutController,
   MakeProfileController,
+  MakeRefreshTokenController,
   MakeRegisterController,
 } from "../design/factory-auth-route.js";
 import { protectAuth } from "middlewares/protectAuth.js";
@@ -15,6 +17,8 @@ const router = express.Router();
 const registerController = MakeRegisterController();
 const loginController = MakeLoginController();
 const profileController = MakeProfileController();
+const refreshTokenController = MakeRefreshTokenController();
+const logoutController = MakeLogoutController();
 
 router.post(
   "/register",
@@ -23,6 +27,14 @@ router.post(
 );
 
 router.post("/login", asyncHandler(loginController.handle));
+
+router.post("/refresh-token", asyncHandler(refreshTokenController.handle));
+
+router.delete(
+  "/logout",
+  protectAuth(authRepository),
+  asyncHandler(logoutController.handle),
+);
 
 router.get(
   "/profile",

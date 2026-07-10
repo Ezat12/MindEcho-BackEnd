@@ -7,6 +7,7 @@ import { asyncHandler } from "./async-handler.js";
 
 export const protectAuth = (authRepository: IAuthRepository) =>
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    console.log("ProtectAuth middleware invoked");
     const authToken = req.headers.authorization;
 
     if (!authToken) {
@@ -19,12 +20,16 @@ export const protectAuth = (authRepository: IAuthRepository) =>
       throw new AppError("You are not authenticated", 401);
     }
 
+    console.log("Token received:", token);
+
     let decodedToken: any;
 
     try {
-      decodedToken = jwt.verify(token, env.JWT_SECRET_KEY);
-    } catch {
-      throw new AppError("Invalid token", 401);
+      decodedToken = jwt.verify(token, env.JWT_ACCESS_SECRET_KEY);
+
+      console.log("Decoded token:", decodedToken);
+    } catch(error: any) {
+      throw new AppError(`Invalid token: ${error.message}`, 401);
     }
 
     const user = await authRepository.findById(decodedToken.id);
@@ -34,6 +39,8 @@ export const protectAuth = (authRepository: IAuthRepository) =>
     }
 
     req.user = user;
+
+    console.log("Authenticated user:", req.user);
 
     next();
   });
