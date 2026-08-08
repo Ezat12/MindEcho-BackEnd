@@ -1,3 +1,4 @@
+import { CloudinaryRepository } from "shared/uploads/cloudinary.repository.js";
 import { CreateJournalController } from "../controllers/create-journal.controller.js";
 import { DeleteJournalController } from "../controllers/delete-journal.controller.js";
 import { GetJournalByIdController } from "../controllers/get-journalById.controller.js";
@@ -13,9 +14,10 @@ import { GetUserJournalsService } from "../services/get-userJournals.service.js"
 import { UpdateJournalService } from "../services/update-journal.service.js";
 
 const journalRepository = new PrismaJournalRepository();
+const uploadRepository = new CloudinaryRepository();
 
 export const MakeCreateJournalController = () => {
-  const createJournalService = new CreateJournalService(journalRepository);
+  const createJournalService = new CreateJournalService(journalRepository, uploadRepository);
   const createJournalController = new CreateJournalController(
     createJournalService,
   );

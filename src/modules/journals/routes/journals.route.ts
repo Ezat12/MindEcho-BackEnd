@@ -13,6 +13,7 @@ import { protectAuth } from "middlewares/protectAuth.js";
 import { allowedTo } from "middlewares/allowedTo.js";
 import { updateJournalSchema } from "../dto/update-journal.dto.js";
 import { PrismaAuthRepository } from "modules/auth/repository/prisma-repository.js";
+import upload from "middlewares/upload.js";
 
 const routerJournals = express.Router();
 
@@ -28,6 +29,7 @@ const prismaAuthRepository = new PrismaAuthRepository();
 routerJournals.post(
   "/",
   protectAuth(prismaAuthRepository),
+  upload.array("attachments"),
   validate(CreateJournalSchema),
   createJournalController.handle,
 );

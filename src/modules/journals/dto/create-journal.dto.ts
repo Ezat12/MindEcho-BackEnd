@@ -7,6 +7,7 @@ export const CreateJournalSchema = z.object({
   content: z
     .string("content is required")
     .min(1, "Content must be at least 1 character long"),
+  attachments: z.array(z.string()).optional(),
   moodId: z.string("moodId is required").optional().nullable(),
 });
 

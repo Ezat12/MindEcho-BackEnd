@@ -17,6 +17,9 @@ const envSchema = z.object({
   JWT_EXPIRES_REFRESH_IN: z.string().default("7d"),
   REDIS_EX_REFRESH_TOKEN: z.coerce.number().default(7),
   REDIS_URL: z.string().min(1, "REDIS_URL is required"),
+  CLOUDINARY_CLOUD_NAME: z.string().min(1, "CLOUDINARY_CLOUD_NAME is required"),
+  CLOUDINARY_API_KEY: z.string().min(1, "CLOUDINARY_API_KEY is required"),
+  CLOUDINARY_API_SECRET: z.string().min(1, "CLOUDINARY_API_SECRET is required"),
 });
 
 const parsed = envSchema.safeParse(process.env);

@@ -3,13 +3,17 @@ import type { CreateJournalDTO } from "../dto/create-journal.dto.js";
 import type { JournalsRepository } from "./journals.repository.js";
 import type { Journal } from "../domain/journals.js";
 import type { UpdateJournalDTO } from "../dto/update-journal.dto.js";
+import type { AttachmentType, Prisma } from ".prisma/client/index.js";
+import type { CreateAttachment } from "../dto/create-attachments-journal.js";
+import type { Attachments } from "../domain/attachments.js";
 
 export class PrismaJournalRepository implements JournalsRepository {
   async createJournal(
+    tx: Prisma.TransactionClient,
     data: CreateJournalDTO,
     userId: string,
   ): Promise<Journal> {
-    const journal = await prisma.journals.create({
+    const journal = await tx.journals.create({
       data: {
         title: data.title,
         content: data.content,
@@ -64,5 +68,22 @@ export class PrismaJournalRepository implements JournalsRepository {
 
   async deleteJournal(id: string): Promise<void> {
     await prisma.journals.delete({ where: { id } });
+  }
+
+  async createAttachments(
+    tx: Prisma.TransactionClient,
+    journalId: string,
+    attachments: CreateAttachment[],
+  ): Promise<Attachments[]> {
+    const createdAttachments = await tx.journalAttachment.createManyAndReturn({
+      data: attachments.map((attachment) => ({
+        journalId: journalId,
+        url: attachment.url,
+        publicId: attachment.publicId,
+        attachmentType: attachment.attachmentType,
+      })),
+    });
+
+    return createdAttachments;
   }
 }

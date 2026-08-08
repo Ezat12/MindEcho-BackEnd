@@ -43,9 +43,30 @@ model journals {
   moodId    String?
   title     String
   content   String
+  attachments JournalAttachment[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user users  @relation(fields: [userId], references: [id])
+  user users  @relation(fields: [userId], references: [id] , onDelete : Cascade)
   mood moods? @relation(fields: [moodId], references: [id])
+}
+
+
+enum AttachmentType {
+  IMAGE
+  VIDEO
+  AUDIO
+}
+
+model JournalAttachment {
+  id        String  @id @default(cuid())
+  url       String
+  publicId  String
+  attachmentType      AttachmentType
+  journalId String
+  createdAt DateTime @default(now())
+
+  journal journals @relation(fields: [journalId], references: [id] , onDelete : Cascade)
+
+  @@index([journalId])
 }

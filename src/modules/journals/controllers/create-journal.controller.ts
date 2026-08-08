@@ -9,10 +9,18 @@ export class CreateJournalController {
   async handle(req: Request, res: Response) {
     const data = req.body;
 
+    const files = req.files as Express.Multer.File[];
+
     const userId = req.user.id;
 
-    const journal = await this.createJournalService.execute(data, userId);
+    const { journal, attachments } = await this.createJournalService.execute(
+      data,
+      files,
+      userId,
+    );
 
-    res.status(201).json({ status: "success", data: journal });
+    res
+      .status(201)
+      .json({ status: "success", data: { ...journal, attachments } });
   }
 }

@@ -7,7 +7,6 @@ import { asyncHandler } from "./async-handler.js";
 
 export const protectAuth = (authRepository: IAuthRepository) =>
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    console.log("ProtectAuth middleware invoked");
     const authToken = req.headers.authorization;
 
     if (!authToken) {
@@ -27,7 +26,6 @@ export const protectAuth = (authRepository: IAuthRepository) =>
     try {
       decodedToken = jwt.verify(token, env.JWT_ACCESS_SECRET_KEY);
 
-      console.log("Decoded token:", decodedToken);
     } catch(error: any) {
       throw new AppError(`Invalid token: ${error.message}`, 401);
     }

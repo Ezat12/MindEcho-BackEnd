@@ -4,6 +4,7 @@ export interface Journal {
   content: string;
   userId: string;
   moodId?: string | null;
+  attachments?: string[];
   createdAt: Date;
   updatedAt: Date;
 }
