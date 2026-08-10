@@ -5,6 +5,7 @@ import {
   MakeGetAllJournalsController,
   MakeGetUserJournalsController,
   MakeUpdateJournalController,
+  MakeDeleteAttachmentController,
   MakeDeleteJournalController,
 } from "../design/factory-journal-route.js";
 import { validate } from "middlewares/validate-zod.js";
@@ -23,6 +24,7 @@ const getJournalByIdController = MakeGetJournalByIdController();
 const getUserJournalsController = MakeGetUserJournalsController();
 const updateJournalController = MakeUpdateJournalController();
 const deleteJournalController = MakeDeleteJournalController();
+const makeDeleteAttachmentController = MakeDeleteAttachmentController();
 
 const prismaAuthRepository = new PrismaAuthRepository();
 
@@ -64,6 +66,12 @@ routerJournals.delete(
   "/:id",
   protectAuth(prismaAuthRepository),
   deleteJournalController.handle,
+);
+
+routerJournals.delete(
+  "/journal/:journalId/attachments/:attachmentId",
+  protectAuth(prismaAuthRepository),
+  makeDeleteAttachmentController.handle,
 );
 
 export { routerJournals as journalsRoutes };

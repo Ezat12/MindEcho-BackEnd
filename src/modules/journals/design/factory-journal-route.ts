@@ -12,12 +12,17 @@ import { GetJournalByIdService } from "../services/get-journalById.service.js";
 import { GetAllJournalsService } from "../services/get-journals.service.js";
 import { GetUserJournalsService } from "../services/get-userJournals.service.js";
 import { UpdateJournalService } from "../services/update-journal.service.js";
+import { DeleteAttachmentService } from "../services/delete-attachment.service.js";
+import { DeleteAttachmentController } from "../controllers/delete-attachment.controller.js";
 
 const journalRepository = new PrismaJournalRepository();
 const uploadRepository = new CloudinaryRepository();
 
 export const MakeCreateJournalController = () => {
-  const createJournalService = new CreateJournalService(journalRepository, uploadRepository);
+  const createJournalService = new CreateJournalService(
+    journalRepository,
+    uploadRepository,
+  );
   const createJournalController = new CreateJournalController(
     createJournalService,
   );
@@ -51,7 +56,10 @@ export const MakeGetUserJournalsController = () => {
 };
 
 export const MakeUpdateJournalController = () => {
-  const updateJournalService = new UpdateJournalService(journalRepository);
+  const updateJournalService = new UpdateJournalService(
+    journalRepository,
+    uploadRepository,
+  );
   const updateJournalController = new UpdateJournalController(
     updateJournalService,
   );
@@ -66,4 +74,16 @@ export const MakeDeleteJournalController = () => {
   );
 
   return deleteJournalController;
+};
+
+export const MakeDeleteAttachmentController = () => {
+  const deleteAttachmentService = new DeleteAttachmentService(
+    journalRepository,
+    uploadRepository,
+  );
+  const deleteAttachmentController = new DeleteAttachmentController(
+    deleteAttachmentService,
+  );
+
+  return deleteAttachmentController;
 };
