@@ -30,6 +30,9 @@ export class PrismaJournalRepository implements JournalsRepository {
       where: {
         id,
       },
+      include: {
+        attachments: true,
+      },
     });
 
     return journal;
@@ -37,7 +40,11 @@ export class PrismaJournalRepository implements JournalsRepository {
 
   // Admin
   async getAllJournals(): Promise<Journal[]> {
-    const journals = await prisma.journals.findMany();
+    const journals = await prisma.journals.findMany({
+      include: {
+        attachments: true,
+      },
+    });
 
     return journals;
   }
@@ -47,6 +54,9 @@ export class PrismaJournalRepository implements JournalsRepository {
     const journals = await prisma.journals.findMany({
       where: {
         userId: userId,
+      },
+      include: {
+        attachments: true,
       },
     });
 
@@ -85,5 +95,21 @@ export class PrismaJournalRepository implements JournalsRepository {
     });
 
     return createdAttachments;
+  }
+
+  async deleteAttachment(attachmentId: string): Promise<void> {
+    await prisma.journalAttachment.delete({
+      where: { id: attachmentId },
+    });
+  }
+
+  async getAttachmentsByJournalId(journalId: string): Promise<Attachments[]> {
+    const attachments = await prisma.journalAttachment.findMany({
+      where: {
+        journalId: journalId,
+      },
+    });
+
+    return attachments;
   }
 }

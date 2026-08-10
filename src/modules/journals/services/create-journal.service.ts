@@ -6,7 +6,6 @@ import { getAttachmentType } from "utils/get-attachment-type.js";
 import type { CreateAttachment } from "../dto/create-attachments-journal.js";
 import type { Attachments } from "../domain/attachments.js";
 import { prisma } from "config/prisma.js";
-import { AppError } from "shared/errors/app-error.js";
 
 export class CreateJournalService {
   constructor(

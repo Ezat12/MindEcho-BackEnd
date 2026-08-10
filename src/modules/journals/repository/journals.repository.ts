@@ -22,4 +22,8 @@ export interface JournalsRepository {
     journalId: string,
     attachments: CreateAttachment[],
   ): Promise<Attachments[]>;
+
+  deleteAttachment(attachmentId: string): Promise<void>;
+
+  getAttachmentsByJournalId(journalId: string): Promise<Attachments[]>;
 }
