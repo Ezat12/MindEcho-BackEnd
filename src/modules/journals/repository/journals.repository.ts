@@ -14,7 +14,11 @@ export interface JournalsRepository {
   getJournalById(id: string): Promise<Journal | null>;
   getAllJournals(): Promise<Journal[]>;
   getUserJournals(userId: string): Promise<Journal[]>;
-  updateJournal(id: string, data: UpdateJournalDTO): Promise<Journal>;
+  updateJournal(
+    tx: Prisma.TransactionClient,
+    id: string,
+    data: UpdateJournalDTO,
+  ): Promise<Journal>;
   deleteJournal(id: string): Promise<void>;
 
   createAttachments(

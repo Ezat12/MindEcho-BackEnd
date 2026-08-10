@@ -10,12 +10,13 @@ export class UpdateJournalController {
     const { id } = req.params;
 
     const userId = req.user.id;
-
     const data = req.body;
+    const files = req.files as Express.Multer.File[];
 
     const journal = await this.updateJournalService.execute(
       userId,
       String(id),
+      files,
       data,
     );
 

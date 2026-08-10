@@ -63,8 +63,12 @@ export class PrismaJournalRepository implements JournalsRepository {
     return journals;
   }
 
-  async updateJournal(id: string, data: UpdateJournalDTO): Promise<Journal> {
-    const journal = await prisma.journals.update({
+  async updateJournal(
+    tx: Prisma.TransactionClient,
+    id: string,
+    data: UpdateJournalDTO,
+  ): Promise<Journal> {
+    const journal = await tx.journals.update({
       where: { id },
       data: {
         ...(data.title !== undefined && { title: data.title }),
