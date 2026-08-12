@@ -20,6 +20,11 @@ export class UpdateJournalController {
       data,
     );
 
-    res.status(200).json({ status: "success", data: journal });
+    res
+      .status(200)
+      .json({
+        status: "success",
+        data: { ...journal.journal, attachments: journal.attachments },
+      });
   }
 }

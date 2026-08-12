@@ -1,8 +1,10 @@
-import type { GetAllMoodsService } from "../services/get-all.service.js";
+import type { GetAllMoodsService } from "../services/getAll-mood.service.js";
 import type { Request, Response } from "express";
 
 export class GetAllMoodsController {
-  constructor(private getAllMoodsService: GetAllMoodsService) {}
+  constructor(private getAllMoodsService: GetAllMoodsService) {
+    this.handle = this.handle.bind(this);
+  }
 
   async handle(req: Request, res: Response) {
     const moods = await this.getAllMoodsService.execute();

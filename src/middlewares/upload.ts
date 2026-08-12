@@ -1,6 +1,5 @@
 import multer from "multer";
 import { AppError } from "shared/errors/app-error.js";
-import {asyncHandler} from "./async-handler.js";
 
 const storage = multer.memoryStorage();
 
@@ -10,11 +9,12 @@ const allowedMimeTypes = [
   "image/jpeg",
   "image/png",
   "image/webp",
+  "image/avif",
   "video/mp4",
   "video/webm",
 ];
 
-const upload =  multer({
+const upload = multer({
   storage,
   limits,
   fileFilter(req, file, cb) {

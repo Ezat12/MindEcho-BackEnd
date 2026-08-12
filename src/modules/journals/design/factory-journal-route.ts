@@ -14,14 +14,17 @@ import { GetUserJournalsService } from "../services/get-userJournals.service.js"
 import { UpdateJournalService } from "../services/update-journal.service.js";
 import { DeleteAttachmentService } from "../services/delete-attachment.service.js";
 import { DeleteAttachmentController } from "../controllers/delete-attachment.controller.js";
+import { PrismaMoodRepository } from "modules/mood/repository/prisma.repository.js";
 
 const journalRepository = new PrismaJournalRepository();
 const uploadRepository = new CloudinaryRepository();
+const moodRepository = new PrismaMoodRepository();
 
 export const MakeCreateJournalController = () => {
   const createJournalService = new CreateJournalService(
     journalRepository,
     uploadRepository,
+    moodRepository,
   );
   const createJournalController = new CreateJournalController(
     createJournalService,

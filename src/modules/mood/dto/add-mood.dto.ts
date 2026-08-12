@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const addMoodSchema = z.object({
+export const addMoodSchema = z.object({
   name: z
     .string("name is required")
     .min(1, "Name must be at least 1 character long"),

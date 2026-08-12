@@ -58,6 +58,7 @@ routerJournals.get(
 routerJournals.put(
   "/:id",
   protectAuth(prismaAuthRepository),
+  upload.array("attachments"),
   validate(updateJournalSchema),
   updateJournalController.handle,
 );
