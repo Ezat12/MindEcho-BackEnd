@@ -13,7 +13,10 @@ export interface JournalsRepository {
     userId: string,
   ): Promise<Journal>;
   getJournalById(id: string): Promise<Journal | null>;
-  getAllJournals(): Promise<Journal[]>;
+  getAllJournals(queryParams: GetJournalsQueryDTO): Promise<{
+    journals: Journal[];
+    total: number;
+  }>;
   getUserJournals(
     userId: string,
     queryParams: GetJournalsQueryDTO,

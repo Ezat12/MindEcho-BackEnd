@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import type { GetAllJournalsService } from "../services/get-journals.service.js";
+import type { GetJournalsQueryDTO } from "../dto/pagination.journals.dto.js";
 
 export class GetJournalsController {
   constructor(private readonly getAllJournalsService: GetAllJournalsService) {
@@ -7,8 +8,20 @@ export class GetJournalsController {
   }
 
   async handle(req: Request, res: Response) {
-    const journals = await this.getAllJournalsService.execute();
+    const queryParams = req.query as GetJournalsQueryDTO;
 
-    res.status(200).json({ status: "success", data: journals });
+    const { journals, total, totalPages } =
+      await this.getAllJournalsService.execute(queryParams);
+
+    res.status(200).json({
+      status: "success",
+      data: journals,
+      meta: {
+        page: queryParams.page,
+        limit: queryParams.limit,
+        total,
+        totalPages,
+      },
+    });
   }
 }

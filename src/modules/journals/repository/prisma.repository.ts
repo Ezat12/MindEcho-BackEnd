@@ -40,14 +40,61 @@ export class PrismaJournalRepository implements JournalsRepository {
   }
 
   // Admin
-  async getAllJournals(): Promise<Journal[]> {
-    const journals = await prisma.journals.findMany({
-      include: {
-        attachments: true,
-      },
-    });
+  async getAllJournals(queryParams: GetJournalsQueryDTO): Promise<{
+    journals: Journal[];
+    total: number;
+  }> {
+    console.log("Query Params", queryParams);
+    const skip = (queryParams.page - 1) * queryParams.limit;
 
-    return journals;
+    const where = {
+      ...(queryParams.moodId && {
+        moodId: queryParams.moodId,
+      }),
+
+      ...(queryParams.search && {
+        OR: [
+          {
+            title: {
+              contains: queryParams.search,
+              mode: "insensitive" as const,
+            },
+          },
+          {
+            content: {
+              contains: queryParams.search,
+              mode: "insensitive" as const,
+            },
+          },
+        ],
+      }),
+    };
+
+    const [journals, total] = await prisma.$transaction([
+      prisma.journals.findMany({
+        skip,
+        take: queryParams.limit,
+
+        where,
+
+        include: {
+          attachments: true,
+        },
+
+        orderBy: {
+          [queryParams.sort]: queryParams.order,
+        },
+      }),
+
+      prisma.journals.count({
+        where,
+      }),
+    ]);
+
+    return {
+      journals,
+      total,
+    };
   }
 
   // User

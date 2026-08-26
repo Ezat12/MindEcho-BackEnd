@@ -15,6 +15,7 @@ import { allowedTo } from "middlewares/allowedTo.js";
 import { updateJournalSchema } from "../dto/update-journal.dto.js";
 import { PrismaAuthRepository } from "modules/auth/repository/prisma-repository.js";
 import upload from "middlewares/upload.js";
+import { getJournalsQuerySchema } from "../dto/pagination.journals.dto.js";
 
 const routerJournals = express.Router();
 
@@ -40,12 +41,14 @@ routerJournals.get(
   "/",
   protectAuth(prismaAuthRepository),
   allowedTo(["ADMIN"]),
+  validate(getJournalsQuerySchema , "query"),
   getAllJournalsController.handle,
 );
 
 routerJournals.get(
   "/my-journals",
   protectAuth(prismaAuthRepository),
+  validate(getJournalsQuerySchema),
   getUserJournalsController.handle,
 );
 
