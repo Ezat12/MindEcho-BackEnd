@@ -8,9 +8,14 @@ export class GetUserJournalsService {
   async execute(
     userId: string,
     queryParams: GetJournalsQueryDTO,
-  ): Promise<Journal[]> {
-    const journals = await this.repository.getUserJournals(userId);
+  ): Promise<{ journals: Journal[]; total: number; totalPages: number }> {
+    const { journals, total } = await this.repository.getUserJournals(
+      userId,
+      queryParams,
+    );
 
-    return journals;
+    const totalPages = Math.ceil(total / queryParams.limit);
+
+    return { journals, total, totalPages };
   }
 }

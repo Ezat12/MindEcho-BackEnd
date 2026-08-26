@@ -6,6 +6,7 @@ import type { UpdateJournalDTO } from "../dto/update-journal.dto.js";
 import type { AttachmentType, Prisma } from ".prisma/client/index.js";
 import type { CreateAttachment } from "../dto/create-attachments-journal.js";
 import type { Attachments } from "../domain/attachments.js";
+import type { GetJournalsQueryDTO } from "../dto/pagination.journals.dto.js";
 
 export class PrismaJournalRepository implements JournalsRepository {
   async createJournal(
@@ -50,17 +51,55 @@ export class PrismaJournalRepository implements JournalsRepository {
   }
 
   // User
-  async getUserJournals(userId: string): Promise<Journal[]> {
-    const journals = await prisma.journals.findMany({
-      where: {
-        userId: userId,
-      },
-      include: {
-        attachments: true,
-      },
-    });
+  async getUserJournals(
+    userId: string,
+    queryParams: GetJournalsQueryDTO,
+  ): Promise<{ journals: Journal[]; total: number }> {
+    const skip = (queryParams.page - 1) * queryParams.limit;
 
-    return journals;
+    const take = queryParams.limit;
+
+    const where = {
+      userId,
+      ...(queryParams.moodId && {
+        moodId: queryParams.moodId,
+      }),
+      ...(queryParams.search && {
+        OR: [
+          {
+            title: {
+              contains: queryParams.search,
+              mode: "insensitive" as const,
+            },
+          },
+          {
+            content: {
+              contains: queryParams.search,
+              mode: "insensitive" as const,
+            },
+          },
+        ],
+      }),
+    };
+
+    const [journals, total] = await prisma.$transaction([
+      prisma.journals.findMany({
+        skip,
+        take,
+        where,
+        include: {
+          attachments: true,
+        },
+
+        orderBy: {
+          [queryParams.sort]: queryParams.order,
+        },
+      }),
+
+      prisma.journals.count({ where }),
+    ]);
+
+    return { journals, total };
   }
 
   async updateJournal(

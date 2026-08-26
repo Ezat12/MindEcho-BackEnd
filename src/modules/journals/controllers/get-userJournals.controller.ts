@@ -15,11 +15,18 @@ export class GetUserJournalsController {
 
     const queryParams = req.query as GetJournalsQueryDTO;
 
-    const journals = await this.getUserJournalsService.execute(
-      userId,
-      queryParams,
-    );
+    const { journals, total, totalPages } =
+      await this.getUserJournalsService.execute(userId, queryParams);
 
-    res.status(200).json({ status: "success", data: journals });
+    res.status(200).json({
+      status: "success",
+      data: journals,
+      meta: {
+        page: queryParams.page,
+        limit: queryParams.limit,
+        total,
+        totalPages,
+      },
+    });
   }
 }
