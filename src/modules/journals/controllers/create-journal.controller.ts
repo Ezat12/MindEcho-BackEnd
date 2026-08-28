@@ -7,7 +7,7 @@ export class CreateJournalController {
   }
 
   async handle(req: Request, res: Response) {
-    const data = req.body;
+    const data = res.locals.body;
 
     const files = req.files as Express.Multer.File[];
 

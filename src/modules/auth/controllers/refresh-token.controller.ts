@@ -8,7 +8,8 @@ export class RefreshTokenController {
   }
 
   async handle(req: Request, res: Response) {
-    const refreshToken = req.body?.refreshToken || req.cookies?.refreshToken;
+    const refreshToken =
+      res.locals.body?.refreshToken || req.cookies?.refreshToken;
     // console.log("cookies:", req.headers.cookie);
 
     if (!refreshToken) {

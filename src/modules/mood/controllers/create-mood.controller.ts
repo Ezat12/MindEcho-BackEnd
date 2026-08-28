@@ -8,7 +8,7 @@ export class CreateMoodController {
   }
 
   async handle(req: Request, res: Response) {
-    await this.moodRepository.execute(req.body);
+    await this.moodRepository.execute(res.locals.body);
 
     res.status(201).json({
       status: "success",

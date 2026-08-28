@@ -41,14 +41,14 @@ routerJournals.get(
   "/",
   protectAuth(prismaAuthRepository),
   allowedTo(["ADMIN"]),
-  validate(getJournalsQuerySchema , "query"),
+  validate(getJournalsQuerySchema, "query"),
   getAllJournalsController.handle,
 );
 
 routerJournals.get(
   "/my-journals",
   protectAuth(prismaAuthRepository),
-  validate(getJournalsQuerySchema),
+  validate(getJournalsQuerySchema, "query"),
   getUserJournalsController.handle,
 );
 

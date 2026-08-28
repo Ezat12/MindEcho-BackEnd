@@ -10,7 +10,7 @@ export class UpdateJournalController {
     const { id } = req.params;
 
     const userId = req.user.id;
-    const data = req.body;
+    const data = res.locals.body;
     const files = req.files as Express.Multer.File[];
 
     const journal = await this.updateJournalService.execute(
@@ -20,11 +20,9 @@ export class UpdateJournalController {
       data,
     );
 
-    res
-      .status(200)
-      .json({
-        status: "success",
-        data: { ...journal.journal, attachments: journal.attachments },
-      });
+    res.status(200).json({
+      status: "success",
+      data: { ...journal.journal, attachments: journal.attachments },
+    });
   }
 }

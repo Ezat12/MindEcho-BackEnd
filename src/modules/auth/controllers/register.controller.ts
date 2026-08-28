@@ -7,7 +7,7 @@ export class RegisterController {
   }
 
   async handle(req: Request, res: Response) {
-    const data = req.body;
+    const data = res.locals.body;
 
     const { registeredUser, accessToken, refreshToken } = await this.registerService.execute(data);
 

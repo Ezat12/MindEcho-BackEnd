@@ -5,7 +5,7 @@ export const getJournalsQuerySchema = validationPaginationSchema.extend({
   sort: z.enum(["createdAt", "updatedAt"]).default("createdAt"),
   order: z.enum(["asc", "desc"]).default("desc"),
   search: z.string().trim().optional(),
-  moodId: z.string().uuid().optional(),
+  moodId: z.string().cuid().optional(),
 });
 
 export type GetJournalsQueryDTO = z.infer<typeof getJournalsQuerySchema>;

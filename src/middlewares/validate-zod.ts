@@ -22,7 +22,7 @@ export const validate = <T>(
         });
       }
 
-      req[source] = result.data;
+      res.locals[source] = result.data;
       next();
     },
   );

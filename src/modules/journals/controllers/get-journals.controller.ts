@@ -8,7 +8,7 @@ export class GetJournalsController {
   }
 
   async handle(req: Request, res: Response) {
-    const queryParams = req.query as GetJournalsQueryDTO;
+    const queryParams = res.locals.query as GetJournalsQueryDTO;
 
     const { journals, total, totalPages } =
       await this.getAllJournalsService.execute(queryParams);
