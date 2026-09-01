@@ -11,6 +11,10 @@ const config: Config = {
   verbose: true,
 
   clearMocks: true,
+
+  moduleNameMapper: {
+    "^(\\w+)/(.*)\\.js$": "<rootDir>/src/$1/$2.ts",
+  },
 };
 
 export default config;

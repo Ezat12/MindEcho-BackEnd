@@ -1,11 +1,11 @@
 import { describe, it, jest } from "@jest/globals";
-
 import type { Journal } from "../../src/modules/journals/domain/journals";
 import type { Attachments } from "../../src/modules/journals/domain/attachments";
-import type { MoodRepository } from "../../src/modules/mood/repository/mood-repository.js";
-import type { UploadRepository } from "../../src/shared/uploads/upload.repository.js";
 import type { JournalsRepository } from "../../src/modules/journals/repository/journals.repository";
-import { CreateJournalService } from "../../src/modules/journals/services/create-journal.service.js";
+import type { CreateJournalDTO } from "../../src/modules/journals/dto/create-journal.dto";
+import type { MoodRepository } from "../../src/modules/mood/repository/mood-repository";
+import type { UploadRepository } from "../../src/shared/uploads/upload.repository";
+import { CreateJournalService } from "../../src/modules/journals/services/create-journal.service";
 
 describe("CreateJournalServices", () => {
   const mockCreateJournal = jest.fn<() => Promise<Journal>>();
@@ -38,7 +38,19 @@ describe("CreateJournalServices", () => {
     moodRepository,
   );
 
-  it("Check Mood id found", () => {
-    mockGetMoodById.mockResolvedValue("1234");
+  it("Should Return Error when moodId not found", async () => {
+    mockGetMoodById.mockResolvedValue(undefined);
+
+    const data = {
+      title: "Hello",
+      content: "I'm Good",
+      moodId: "1234",
+    } as CreateJournalDTO;
+
+    const userId = "user-1234";
+
+    const result = service.execute(data, [], userId);
+
+    await expect(result).rejects.toThrow("Mood not found");
   });
 });
