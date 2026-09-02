@@ -1,4 +1,6 @@
-import { describe, it, jest } from "@jest/globals";
+import type { Express } from "express";
+import type { Multer } from "multer";
+import { describe, expect, it, jest } from "@jest/globals";
 import type { Journal } from "../../src/modules/journals/domain/journals";
 import type { Attachments } from "../../src/modules/journals/domain/attachments";
 import type { JournalsRepository } from "../../src/modules/journals/repository/journals.repository";
