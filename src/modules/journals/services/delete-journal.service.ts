@@ -8,8 +8,6 @@ export class DeleteJournalService {
   async execute(id: string, userId: string, role: Role) {
     const existJournal = await this.repository.getJournalById(id);
 
-    console.log("Exist journal:", existJournal);
-
     if (!existJournal) {
       throw new AppError("Journal not found", 404);
     }
