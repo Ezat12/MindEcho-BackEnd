@@ -12,8 +12,11 @@
     "types": ["node", "jest", "express", "multer"],
     "moduleResolution": "nodenext",
     "paths": {
-      "*": ["./src/*", "./node_modules/*", "./src/types/express/*"]
+      "*": ["./src/*", "./node_modules/*", "./src/types/express/*"],
+      "config/*": ["./src/config/*"],
+      "shared/*": ["./src/shared/*"]
     },
+
     "typeRoots": ["./node_modules/@types", "./src/express/types"],
     // For nodejs:
     // "lib": ["esnext"],
