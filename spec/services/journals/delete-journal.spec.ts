@@ -1,7 +1,7 @@
 import { describe, expect, it, jest, beforeEach } from "@jest/globals";
-import type { Journal } from "../../src/modules/journals/domain/journals";
-import type { JournalsRepository } from "../../src/modules/journals/repository/journals.repository";
-import { DeleteJournalService } from "../../src/modules/journals/services/delete-journal.service";
+import type { Journal } from "../../../src/modules/journals/domain/journals";
+import type { JournalsRepository } from "../../../src/modules/journals/repository/journals.repository";
+import { DeleteJournalService } from "../../../src/modules/journals/services/delete-journal.service";
 import type { Role } from "@prisma/client";
 
 describe("DeleteJournalService", () => {

@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, jest } from "@jest/globals";
 
-import type { ITokenProvider } from "../../src/modules/auth/provider/token-provider";
+import type { ITokenProvider } from "../../../src/modules/auth/provider/token-provider";
 
 const mockVerify = jest.fn();
 
@@ -19,7 +19,7 @@ jest.unstable_mockModule("config/redis.js", () => ({
 }));
 
 const { RefreshTokenService } =
-  await import("../../src/modules/auth/services/refresh-token.service");
+  await import("../../../src/modules/auth/services/refresh-token.service");
 
 describe("RefreshTokenService", () => {
   beforeEach(() => {

@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, it, jest } from "@jest/globals";
-import type { Journal } from "../../src/modules/journals/domain/journals";
-import type { JournalsRepository } from "../../src/modules/journals/repository/journals.repository";
-import type { UploadRepository } from "../../src/shared/uploads/upload.repository";
-import { DeleteAttachmentService } from "../../src/modules/journals/services/delete-attachment.service";
-import type { Attachments } from "../../src/modules/journals/domain/attachments";
+import type { Journal } from "../../../src/modules/journals/domain/journals";
+import type { JournalsRepository } from "../../../src/modules/journals/repository/journals.repository";
+import type { UploadRepository } from "../../../src/shared/uploads/upload.repository";
+import { DeleteAttachmentService } from "../../../src/modules/journals/services/delete-attachment.service";
+import type { Attachments } from "../../../src/modules/journals/domain/attachments";
 
 describe("DeleteAttachmentService", () => {
   const mockGetJournalById = jest.fn<() => Promise<Journal | undefined>>();

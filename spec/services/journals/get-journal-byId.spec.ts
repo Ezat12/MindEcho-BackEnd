@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, jest } from "@jest/globals";
-import type { Journal } from "../../src/modules/journals/domain/journals";
-import type { JournalsRepository } from "../../src/modules/journals/repository/journals.repository";
-import { GetJournalByIdService } from "../../src/modules/journals/services/get-journalById.service";
+import type { Journal } from "../../../src/modules/journals/domain/journals";
+import type { JournalsRepository } from "../../../src/modules/journals/repository/journals.repository";
+import { GetJournalByIdService } from "../../../src/modules/journals/services/get-journalById.service";
 
 describe("GetJournalByIdService", () => {
   const mockGetJournalById = jest.fn<() => Promise<Journal | undefined>>();

@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, jest } from "@jest/globals";
-import type { Journal } from "../../src/modules/journals/domain/journals";
-import { GetAllJournalsService } from "../../src/modules/journals/services/get-journals.service";
-import type { JournalsRepository } from "../../src/modules/journals/repository/journals.repository";
+import type { Journal } from "../../../src/modules/journals/domain/journals";
+import { GetAllJournalsService } from "../../../src/modules/journals/services/get-journals.service";
+import type { JournalsRepository } from "../../../src/modules/journals/repository/journals.repository";
 
 describe("GetAllJournalsService", () => {
   beforeEach(() => {

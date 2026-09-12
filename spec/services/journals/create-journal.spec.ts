@@ -1,13 +1,13 @@
 import type { Express } from "express";
 import type { Multer } from "multer";
 import { describe, expect, it, jest } from "@jest/globals";
-import type { Journal } from "../../src/modules/journals/domain/journals";
-import type { Attachments } from "../../src/modules/journals/domain/attachments";
-import type { JournalsRepository } from "../../src/modules/journals/repository/journals.repository";
-import type { CreateJournalDTO } from "../../src/modules/journals/dto/create-journal.dto";
-import type { MoodRepository } from "../../src/modules/mood/repository/mood-repository";
-import type { UploadRepository } from "../../src/shared/uploads/upload.repository";
-import { CreateJournalService } from "../../src/modules/journals/services/create-journal.service";
+import type { Journal } from "../../../src/modules/journals/domain/journals";
+import type { Attachments } from "../../../src/modules/journals/domain/attachments";
+import type { JournalsRepository } from "../../../src/modules/journals/repository/journals.repository";
+import type { CreateJournalDTO } from "../../../src/modules/journals/dto/create-journal.dto";
+import type { MoodRepository } from "../../../src/modules/mood/repository/mood-repository";
+import type { UploadRepository } from "../../../src/shared/uploads/upload.repository";
+import { CreateJournalService } from "../../../src/modules/journals/services/create-journal.service";
 
 describe("CreateJournalServices", () => {
   const mockCreateJournal = jest.fn<() => Promise<Journal>>();

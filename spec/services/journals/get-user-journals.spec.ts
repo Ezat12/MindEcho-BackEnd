@@ -1,7 +1,7 @@
 import { describe, expect, it, jest } from "@jest/globals";
-import { GetUserJournalsService } from "../../src/modules/journals/services/get-userJournals.service";
-import type { JournalsRepository } from "../../src/modules/journals/repository/journals.repository";
-import type { Journal } from "../../src/modules/journals/domain/journals";
+import { GetUserJournalsService } from "../../../src/modules/journals/services/get-userJournals.service";
+import type { JournalsRepository } from "../../../src/modules/journals/repository/journals.repository";
+import type { Journal } from "../../../src/modules/journals/domain/journals";
 
 describe("GetUserJournalsServices", () => {
   const mockGetUserJournals =
