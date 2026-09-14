@@ -25,8 +25,7 @@ export const protectAuth = (authRepository: IAuthRepository) =>
 
     try {
       decodedToken = jwt.verify(token, env.JWT_ACCESS_SECRET_KEY);
-
-    } catch(error: any) {
+    } catch (error: any) {
       throw new AppError(`Invalid token: ${error.message}`, 401);
     }
 
