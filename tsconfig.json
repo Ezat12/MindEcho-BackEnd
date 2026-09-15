@@ -50,5 +50,10 @@
     "moduleDetection": "force",
     "skipLibCheck": true
   },
-  "include": ["src/**/*", "libs/**/*.{ts,tsx}"]
+  "include": [
+    "src/**/*",
+    "libs/**/*.{ts,tsx}",
+    "spec/**/*.ts",
+    "spec/**/*.{  ts,tsx}"
+  ]
 }

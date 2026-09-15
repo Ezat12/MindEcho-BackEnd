@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it, jest } from "@jest/globals";
 
-import type { User } from "../../../src/modules/users/domain/user";
-import type { ITokenProvider } from "../../../src/modules/auth/provider/token-provider";
-import type { IAuthRepository } from "../../../src/modules/auth/repository/auth-repository";
+import type { User } from "../../../src/modules/users/domain/user.js";
+import type { ITokenProvider } from "../../../src/modules/auth/provider/token-provider.js";
+import type { IAuthRepository } from "../../../src/modules/auth/repository/auth-repository.js";
 
 const mockRedisSet =
   jest.fn<
@@ -26,7 +26,7 @@ jest.unstable_mockModule("bcryptjs", () => ({
 }));
 
 const { LoginService } =
-  await import("../../../src/modules/auth/services/login.service");
+  await import("../../../src/modules/auth/services/login.service.js");
 
 describe("LoginService", () => {
   beforeEach(() => {

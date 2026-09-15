@@ -1,7 +1,8 @@
 import { describe, expect, it, jest } from "@jest/globals";
-import { GetUserJournalsService } from "../../../src/modules/journals/services/get-userJournals.service";
-import type { JournalsRepository } from "../../../src/modules/journals/repository/journals.repository";
-import type { Journal } from "../../../src/modules/journals/domain/journals";
+import { GetUserJournalsService } from "../../../src/modules/journals/services/get-userJournals.service.js";
+import type { JournalsRepository } from "../../../src/modules/journals/repository/journals.repository.js";
+import type { Journal } from "../../../src/modules/journals/domain/journals.js";
+import type { GetJournalsQueryDTO } from "modules/journals/dto/pagination.journals.dto.js";
 
 describe("GetUserJournalsServices", () => {
   const mockGetUserJournals =
@@ -26,7 +27,7 @@ describe("GetUserJournalsServices", () => {
       page: 1,
       sort: "createdAt",
       order: "desc",
-    };
+    } as GetJournalsQueryDTO;
 
     const userId = "1234";
 
@@ -43,7 +44,7 @@ describe("GetUserJournalsServices", () => {
       page: 1,
       sort: "createdAt",
       order: "desc",
-    };
+    } as GetJournalsQueryDTO;
 
     const userId = "1234";
 

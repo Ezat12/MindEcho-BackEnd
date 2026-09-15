@@ -1,7 +1,7 @@
 import { describe, expect, it, jest } from "@jest/globals";
 
-import type { AddMoodDTO } from "../../../src/modules/mood/dto/add-mood.dto";
-import type { MoodRepository } from "../../../src/modules/mood/repository/mood-repository";
+import type { AddMoodDTO } from "../../../src/modules/mood/dto/add-mood.dto.js";
+import type { MoodRepository } from "../../../src/modules/mood/repository/mood-repository.js";
 
 const mockAddMood = jest.fn<(mood: AddMoodDTO) => Promise<void>>();
 
@@ -10,7 +10,7 @@ const mockMoodRepository = {
 } as unknown as MoodRepository;
 
 const { CreateMoodService } =
-  await import("../../../src/modules/mood/services/create-mood.service");
+  await import("../../../src/modules/mood/services/create-mood.service.js");
 
 describe("CreateMoodService", () => {
   const service = new CreateMoodService(mockMoodRepository);

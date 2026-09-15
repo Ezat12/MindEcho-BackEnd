@@ -9,7 +9,7 @@ jest.unstable_mockModule("config/redis.js", () => ({
 }));
 
 const { LogoutService } =
-  await import("../../../src/modules/auth/services/logout.service");
+  await import("../../../src/modules/auth/services/logout.service.js");
 
 describe("LogoutService", () => {
   beforeEach(() => {

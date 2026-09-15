@@ -1,7 +1,8 @@
 import { beforeEach, describe, expect, it, jest } from "@jest/globals";
-import type { Journal } from "../../../src/modules/journals/domain/journals";
-import { GetAllJournalsService } from "../../../src/modules/journals/services/get-journals.service";
-import type { JournalsRepository } from "../../../src/modules/journals/repository/journals.repository";
+import type { Journal } from "../../../src/modules/journals/domain/journals.js";
+import { GetAllJournalsService } from "../../../src/modules/journals/services/get-journals.service.js";
+import type { JournalsRepository } from "../../../src/modules/journals/repository/journals.repository.js";
+import type { GetJournalsQueryDTO } from "modules/journals/dto/pagination.journals.dto.js";
 
 describe("GetAllJournalsService", () => {
   beforeEach(() => {
@@ -36,7 +37,7 @@ describe("GetAllJournalsService", () => {
       total: 1,
     });
 
-    const queryParams = { limit: 10, page: 1 };
+    const queryParams = { limit: 10, page: 1 } as GetJournalsQueryDTO;
 
     const result = await service.execute(queryParams);
 
@@ -48,7 +49,7 @@ describe("GetAllJournalsService", () => {
   it("should return error when repository throws an error", async () => {
     mockGetAllJournals.mockRejectedValue(new Error("Database error"));
 
-    const queryParams = { limit: 10, page: 1 };
+    const queryParams = { limit: 10, page: 1 } as GetJournalsQueryDTO;
 
     await expect(service.execute(queryParams)).rejects.toThrow(
       "Database error",

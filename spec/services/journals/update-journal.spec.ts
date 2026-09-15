@@ -1,12 +1,12 @@
 import type { Express } from "express";
 import type { Multer } from "multer";
 import { beforeEach, describe, expect, it, jest } from "@jest/globals";
-import type { Journal } from "../../../src/modules/journals/domain/journals";
-import type { Attachments } from "../../../src/modules/journals/domain/attachments";
-import type { JournalsRepository } from "../../../src/modules/journals/repository/journals.repository";
-import type { UpdateJournalDTO } from "../../../src/modules/journals/dto/update-journal.dto";
-import type { UploadRepository } from "../../../src/shared/uploads/upload.repository";
-import { UpdateJournalService } from "../../../src/modules/journals/services/update-journal.service";
+import type { Journal } from "../../../src/modules/journals/domain/journals.js";
+import type { Attachments } from "../../../src/modules/journals/domain/attachments.js";
+import type { JournalsRepository } from "../../../src/modules/journals/repository/journals.repository.js";
+import type { UpdateJournalDTO } from "../../../src/modules/journals/dto/update-journal.dto.js";
+import type { UploadRepository } from "../../../src/shared/uploads/upload.repository.js";
+import { UpdateJournalService } from "../../../src/modules/journals/services/update-journal.service.js";
 import type { AttachmentType } from ".prisma/client/index.js";
 
 describe("UpdateJournalServices", () => {

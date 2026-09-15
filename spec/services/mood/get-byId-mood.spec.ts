@@ -1,7 +1,7 @@
 import { describe, expect, it, jest } from "@jest/globals";
 
-import type { Mood } from "../../../src/modules/mood/domain/mood";
-import type { MoodRepository } from "../../../src/modules/mood/repository/mood-repository";
+import type { Mood } from "../../../src/modules/mood/domain/mood.js";
+import type { MoodRepository } from "../../../src/modules/mood/repository/mood-repository.js";
 
 const mockGetMoodById = jest.fn<(id: string) => Promise<Mood | null>>();
 
@@ -10,7 +10,7 @@ const mockMoodRepository = {
 } as unknown as MoodRepository;
 
 const { GetMoodByIdService } =
-  await import("../../../src/modules/mood/services/getById-mood.service");
+  await import("../../../src/modules/mood/services/getById-mood.service.js");
 
 describe("GetMoodByIdService", () => {
   const service = new GetMoodByIdService(mockMoodRepository);

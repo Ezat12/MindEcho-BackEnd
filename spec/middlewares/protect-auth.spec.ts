@@ -17,6 +17,7 @@ describe("ProtectAuthMiddleware", () => {
   const mockFindById = jest.fn<() => Promise<User | null>>();
 
   const mockRequest = {
+    user: undefined,
     headers: {
       authorization: undefined,
     },
@@ -44,5 +45,87 @@ describe("ProtectAuthMiddleware", () => {
         statusCode: 401,
       }),
     );
+  });
+
+  it("Should throw an error if token is malformed", async () => {
+    mockRequest.headers.authorization = "Bearer";
+
+    protectAuthMiddleware(mockRequest, mockResponse, mockNextFunction);
+
+    await new Promise(setImmediate);
+
+    expect(mockNextFunction).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: "You are not authenticated",
+        statusCode: 401,
+      }),
+    );
+  });
+
+  it("should return error when decoded token failed", async () => {
+    mockRequest.headers.authorization = "Bearer hiiiiiiiiiiiii";
+
+    mockVerify.mockImplementation(() => {
+      throw new Error("error when decoded token");
+    });
+
+    protectAuthMiddleware(mockRequest, mockResponse, mockNextFunction);
+    await new Promise(setImmediate);
+
+    expect(mockNextFunction).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: "Invalid token: error when decoded token",
+        statusCode: 401,
+      }),
+    );
+  });
+
+  it("should throw an error when decoded token failed", async () => {
+    mockRequest.headers.authorization = "Bearer hiiiiiiiiiiiii";
+
+    mockVerify.mockImplementation(() => {
+      return {
+        id: "123",
+      };
+    });
+
+    mockFindById.mockResolvedValue(null);
+
+    protectAuthMiddleware(mockRequest, mockResponse, mockNextFunction);
+    await new Promise(setImmediate);
+
+    expect(mockNextFunction).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: "User not found",
+        statusCode: 404,
+      }),
+    );
+  });
+
+  it("Should pass when user authenticated", async () => {
+    mockRequest.headers.authorization = "Bearer hiiiiiiiiiiiii";
+    mockVerify.mockImplementation(() => {
+      return {
+        id: "123",
+      };
+    });
+
+    const user = {
+      id: "123",
+      email: "user@example.com",
+      password: "hashed_password",
+      name: "John Doe",
+      role: "CLIENT",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    } as User;
+
+    mockFindById.mockResolvedValue(user);
+
+    protectAuthMiddleware(mockRequest, mockResponse, mockNextFunction);
+    await new Promise(setImmediate);
+
+    expect(mockNextFunction).toHaveBeenCalledWith();
+    expect(mockRequest.user).toEqual(user);
   });
 });
