@@ -70,3 +70,39 @@ model JournalAttachment {
 
   @@index([journalId])
 }
+
+model library {
+  id       String   @id @default(cuid())
+  title     String
+  description  String
+  imageUrl    String
+  content    String?
+  url    String?
+  categoryId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  category categoryLibrary @relation(fields: [categoryId] , references: [id] )
+}
+
+model categoryLibrary {
+  id       String   @id @default(cuid())
+  name      String  
+  slug      String   @unique
+  description String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  library library[]
+
+}
+
+
+model libraryMood {
+  id      String  @id @default(cuid())
+  moodId    String
+  libraryId  String
+
+  mood moods @relation(fields: [moodId] , references: [id] )
+  library library @relation(fields: [libraryId] , references: [id] )
+}
