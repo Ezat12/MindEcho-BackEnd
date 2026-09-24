@@ -35,6 +35,7 @@ model moods {
   description String?
 
   journals journals[]
+  libraryMood libraryMood[]
 }
 
 model journals {
@@ -48,7 +49,7 @@ model journals {
   updatedAt DateTime @updatedAt
 
   user users  @relation(fields: [userId], references: [id] , onDelete : Cascade)
-  mood moods? @relation(fields: [moodId], references: [id])
+  mood moods? @relation(fields: [moodId], references: [id] , onDelete: SetNull)
 }
 
 
@@ -82,7 +83,9 @@ model library {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  category categoryLibrary @relation(fields: [categoryId] , references: [id] )
+  libraryMood libraryMood[]
+  category categoryLibrary @relation(fields: [categoryId] , references: [id]  )
+
 }
 
 model categoryLibrary {
@@ -103,6 +106,8 @@ model libraryMood {
   moodId    String
   libraryId  String
 
-  mood moods @relation(fields: [moodId] , references: [id] )
-  library library @relation(fields: [libraryId] , references: [id] )
+  mood moods @relation(fields: [moodId] , references: [id] , onDelete: Cascade )
+  library library @relation(fields: [libraryId] , references: [id]  , onDelete: Cascade)
+
+  @@unique([moodId , libraryId])
 }
