@@ -16,6 +16,6 @@ router.use("/moods", moodsRoutes);
 
 router.use("/journals", journalsRoutes);
 
-router.use("category-library", categoryLibraryRoutes);
+router.use("/category-library", categoryLibraryRoutes);
 
 export { router };

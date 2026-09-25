@@ -26,6 +26,10 @@ app.get("/", (_req, res) => {
 app.use("/api/v1", router);
 app.use(errorHandler);
 
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  throw new AppError("Route not success", 400);
+});
+
 app.use((req: Request, res: Response, next: NextFunction) => {
   next(new AppError(`Route ${req.originalUrl} not found`, 404));
 });

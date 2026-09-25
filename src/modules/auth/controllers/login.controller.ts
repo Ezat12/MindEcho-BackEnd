@@ -7,7 +7,7 @@ export class LoginController {
   }
 
   async handle(req: Request, res: Response) {
-    const { email, password } = res.locals.body;
+    const { email, password } = req.body;
 
     const { user, accessToken, refreshToken } = await this.loginService.execute(
       email,

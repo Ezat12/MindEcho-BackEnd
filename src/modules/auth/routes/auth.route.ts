@@ -22,7 +22,7 @@ const logoutController = MakeLogoutController();
 
 router.post(
   "/register",
-  validate(registerUserSchema),
+  validate(registerUserSchema , "body"),
   asyncHandler(registerController.handle),
 );
 

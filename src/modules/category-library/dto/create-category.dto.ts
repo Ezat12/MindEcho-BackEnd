@@ -3,7 +3,7 @@ import { z } from "zod";
 export const createCategorySchema = z.object({
   name: z
     .string("name is required")
-    .min(1, "Name must be at least 1 character long"),
+    .min(2, "Name must be at least 2 character long"),
 });
 
 export type CreateCategoryDTO = z.infer<typeof createCategorySchema>;
