@@ -1,10 +1,10 @@
 import { prisma } from "config/prisma.js";
 import type { CategoryLibrary } from "../domain/categoryLibrary.js";
 import type { CreateCategoryDTO } from "../dto/create-category.dto.js";
-import type { categoryLibraryRepository } from "./category-library.repository.js";
+import type { ICategoryLibraryRepository } from "./category-library.repository.js";
 import type { UpdateCategoryDTO } from "../dto/update-category.dto.js";
 
-class PrismaCategoryLibraryRepository implements categoryLibraryRepository {
+export class PrismaCategoryLibraryRepository implements ICategoryLibraryRepository {
   async createCategoryLibrary(
     data: CreateCategoryDTO,
     slug: string,
@@ -22,7 +22,7 @@ class PrismaCategoryLibraryRepository implements categoryLibraryRepository {
   async updateCategoryLibrary(
     id: string,
     data: UpdateCategoryDTO,
-    slug?: string,
+    slug: string,
   ): Promise<CategoryLibrary> {
     const category = await prisma.categoryLibrary.update({
       where: {
@@ -38,7 +38,11 @@ class PrismaCategoryLibraryRepository implements categoryLibraryRepository {
   }
 
   async getAllCategoryLibrary(): Promise<CategoryLibrary[]> {
-    const categories = await prisma.categoryLibrary.findMany();
+    const categories = await prisma.categoryLibrary.findMany({
+      orderBy: {
+        name: "asc",
+      },
+    });
 
     return categories;
   }

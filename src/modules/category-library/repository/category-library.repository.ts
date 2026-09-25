@@ -2,7 +2,7 @@ import type { CategoryLibrary } from "../domain/categoryLibrary.js";
 import type { CreateCategoryDTO } from "../dto/create-category.dto.js";
 import type { UpdateCategoryDTO } from "../dto/update-category.dto.js";
 
-export interface categoryLibraryRepository {
+export interface ICategoryLibraryRepository {
   createCategoryLibrary(
     data: CreateCategoryDTO,
     slug: string,
@@ -11,7 +11,7 @@ export interface categoryLibraryRepository {
     id: string,
     data: UpdateCategoryDTO,
     slug: string,
-  ): Promise<CategoryLibrary>;
+  ): Promise<CategoryLibrary >;
   getAllCategoryLibrary(): Promise<CategoryLibrary[]>;
   getCategoryLibraryById(id: string): Promise<CategoryLibrary | null>;
   deleteCategoryLibrary(id: string): Promise<void>;
