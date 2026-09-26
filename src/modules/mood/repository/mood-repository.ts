@@ -5,4 +5,5 @@ export interface MoodRepository {
   getAllMoods(): Promise<Mood[]>;
   getMoodById(id: string): Promise<Mood | null>;
   addMood(mood: AddMoodDTO): Promise<void>;
+  findMany(moodIds: string[]): Promise<Mood[]>;
 }

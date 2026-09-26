@@ -17,7 +17,6 @@ export class PrismaMoodRepository implements MoodRepository {
 
   async addMood(mood: Mood): Promise<void> {
     const data = {
-
       name: mood.name,
       slug: mood.slug,
       icon: mood.icon || null,
@@ -27,5 +26,17 @@ export class PrismaMoodRepository implements MoodRepository {
     await prisma.moods.create({
       data,
     });
+  }
+
+  findMany(moodIds: string[]): Promise<Mood[]> {
+    const moods = prisma.moods.findMany({
+      where: {
+        id: {
+          in: moodIds,
+        },
+      },
+    });
+
+    return moods;
   }
 }
