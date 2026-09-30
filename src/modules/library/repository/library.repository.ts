@@ -8,6 +8,10 @@ export interface ILibrary {
   createLibrary(
     tx: Prisma.TransactionClient,
     data: CreateLibraryDTO,
+    imageUrl: string,
+    imagePublicId: string,
+    resourceUrl: string | null,
+    resourcePublicId: string | null,
   ): Promise<Library>;
   updateLibrary(
     tx: Prisma.TransactionClient,

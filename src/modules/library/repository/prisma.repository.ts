@@ -10,14 +10,20 @@ export class PrismaLibraryRepository implements ILibrary {
   async createLibrary(
     tx: Prisma.TransactionClient,
     data: CreateLibraryDTO,
+    imageUrl: string,
+    imagePublicId: string,
+    url: string | null,
+    urlPublicId: string | null,
   ): Promise<Library> {
     const library = await tx.library.create({
       data: {
         title: data.title,
         description: data.description,
-        imageUrl: data.imageUrl,
+        imageUrl,
+        imagePublicId,
         content: data.content ?? null,
-        url: data.url ?? null,
+        url,
+        urlPublicId,
         categoryId: data.categoryId,
       },
     });
@@ -66,13 +72,25 @@ export class PrismaLibraryRepository implements ILibrary {
       where: { id },
     });
 
-
     return library;
   }
 
   async deleteLibrary(id: string): Promise<void> {
     await prisma.library.delete({
       where: { id },
+    });
+  }
+
+  async createLibraryMood(
+    tx: Prisma.TransactionClient,
+    moodIds: string[],
+    libraryId: string,
+  ): Promise<void> {
+    await tx.libraryMood.createMany({
+      data: moodIds.map((moodId) => ({
+        libraryId,
+        moodId,
+      })),
     });
   }
 }
