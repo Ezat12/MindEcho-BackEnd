@@ -35,25 +35,44 @@ export class PrismaLibraryRepository implements ILibrary {
     tx: Prisma.TransactionClient,
     id: string,
     data: UpdateLibraryDTO,
+    imageUrl: string | null,
+    imagePublicId: string | null,
+    resourceUrl: string | null,
+    resourcePublicId: string | null,
   ): Promise<Library> {
     const library = await tx.library.update({
       where: { id },
       data: {
-        ...(data.title !== undefined && { title: data.title }),
+        ...(data.title !== undefined && {
+          title: data.title,
+        }),
+
         ...(data.description !== undefined && {
           description: data.description,
         }),
-        ...(data.imageUrl !== undefined && {
-          imageUrl: data.imageUrl,
+
+        ...(data.categoryId !== undefined && {
+          categoryId: data.categoryId,
         }),
+
         ...(data.content !== undefined && {
           content: data.content,
         }),
-        ...(data.url !== undefined && {
-          url: data.url,
+
+        ...(imageUrl !== null && {
+          imageUrl,
         }),
-        ...(data.categoryId !== undefined && {
-          categoryId: data.categoryId,
+
+        ...(imagePublicId !== null && {
+          imagePublicId,
+        }),
+
+        ...(resourceUrl !== null && {
+          url: resourceUrl,
+        }),
+
+        ...(resourcePublicId !== null && {
+          urlPublicId: resourcePublicId,
         }),
       },
     });

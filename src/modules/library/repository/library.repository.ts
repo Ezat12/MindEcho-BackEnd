@@ -8,7 +8,7 @@ export interface ILibrary {
   createLibrary(
     tx: Prisma.TransactionClient,
     data: CreateLibraryDTO,
-    imageUrl: string,
+    imageUrl: string ,
     imagePublicId: string,
     resourceUrl: string | null,
     resourcePublicId: string | null,
@@ -17,6 +17,10 @@ export interface ILibrary {
     tx: Prisma.TransactionClient,
     id: string,
     data: UpdateLibraryDTO,
+    imageUrl: string | null,
+    imagePublicId: string | null,
+    resourceUrl: string | null,
+    resourcePublicId: string | null,
   ): Promise<Library>;
   getAllLibrary(): Promise<Library[]>;
   getLibraryById(id: string): Promise<Library | null>;

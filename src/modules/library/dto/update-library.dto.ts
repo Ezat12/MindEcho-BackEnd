@@ -11,19 +11,16 @@ export const updateLibrarySchema = z.object({
     .nonempty("Description cannot be empty")
     .optional(),
 
-  imageUrl: z
-    .string("Image URL must be a string")
-    .url("Invalid image URL")
-    .nonempty("Image URL cannot be empty")
-    .optional(),
-
   content: z.string("Content must be a string").optional(),
-
-  url: z.string("URL must be a string").url("Invalid URL").optional(),
 
   categoryId: z
     .string("Category ID must be a string")
     .nonempty("Category ID cannot be empty")
+    .optional(),
+
+  moodIds: z
+    .array(z.string())
+    .min(1, "At least one mood is required")
     .optional(),
 });
 
