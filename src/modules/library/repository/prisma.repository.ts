@@ -5,6 +5,7 @@ import type { Library } from "../domain/library.js";
 import type { CreateLibraryDTO } from "../dto/created-library.dto.js";
 import type { UpdateLibraryDTO } from "../dto/update-library.dto.js";
 import type { ILibrary } from "./library.repository.js";
+import type { PaginationLibraryDTO } from "../dto/pagination-library.dto.js";
 
 export class PrismaLibraryRepository implements ILibrary {
   async createLibrary(
@@ -80,10 +81,60 @@ export class PrismaLibraryRepository implements ILibrary {
     return library;
   }
 
-  async getAllLibrary(): Promise<Library[]> {
-    const libraries = await prisma.library.findMany();
+  async getAllLibrary(
+    query: PaginationLibraryDTO,
+  ): Promise<{ libraries: Library[]; total: number }> {
+    const skip = (query.page - 1) * query.limit;
 
-    return libraries;
+    const where = {
+      ...(query.categoryId && {
+        categoryId: query.categoryId,
+      }),
+
+      ...(query.search && {
+        OR: [
+          {
+            title: {
+              contains: query.search,
+              mode: "insensitive" as const,
+            },
+          },
+          {
+            description: {
+              contains: query.search,
+              mode: "insensitive" as const,
+            },
+          },
+        ],
+      }),
+
+      ...(query.moodIds &&
+        query.moodIds.length > 0 && {
+          libraryMood: {
+            some: {
+              moodId: {
+                in: query.moodIds,
+              },
+            },
+          },
+        }),
+    };
+
+    const [libraries, total] = await prisma.$transaction([
+      prisma.library.findMany({
+        skip,
+        take: query.limit,
+        where,
+        orderBy: {
+          [query.sort]: query.order,
+        },
+      }),
+      prisma.library.count({
+        where,
+      }),
+    ]);
+
+    return { libraries, total };
   }
 
   async getLibraryById(id: string): Promise<Library | null> {

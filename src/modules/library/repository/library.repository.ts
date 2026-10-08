@@ -3,12 +3,13 @@ import type { Library } from "../domain/library.js";
 import type { CreateLibraryDTO } from "../dto/created-library.dto.js";
 import type { UpdateLibraryDTO } from "../dto/update-library.dto.js";
 import type { LibraryMood } from "../domain/library-mood.js";
+import type { PaginationLibraryDTO } from "../dto/pagination-library.dto.js";
 
 export interface ILibrary {
   createLibrary(
     tx: Prisma.TransactionClient,
     data: CreateLibraryDTO,
-    imageUrl: string ,
+    imageUrl: string,
     imagePublicId: string,
     resourceUrl: string | null,
     resourcePublicId: string | null,
@@ -22,7 +23,9 @@ export interface ILibrary {
     resourceUrl: string | null,
     resourcePublicId: string | null,
   ): Promise<Library>;
-  getAllLibrary(): Promise<Library[]>;
+  getAllLibrary(
+    query: PaginationLibraryDTO,
+  ): Promise<{ libraries: Library[]; total: number }>;
   getLibraryById(id: string): Promise<Library | null>;
   deleteLibrary(id: string): Promise<void>;
 
