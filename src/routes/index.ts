@@ -5,6 +5,7 @@ import { authRoutes } from "../modules/auth/routes/auth.route.js";
 import { journalsRoutes } from "../modules/journals/routes/journals.route.js";
 import { moodsRoutes } from "../modules/mood/routes/mood.route.js";
 import { categoryLibraryRoutes } from "../modules/category-library/routes/category-library.route.js";
+import { libraryRoutes } from "../modules/library/routes/index.route.js";
 
 const router = Router();
 
@@ -17,5 +18,7 @@ router.use("/moods", moodsRoutes);
 router.use("/journals", journalsRoutes);
 
 router.use("/category-library", categoryLibraryRoutes);
+
+router.use("/library", libraryRoutes);
 
 export { router };
