@@ -27,6 +27,10 @@ export interface ILibrary {
     query: PaginationLibraryDTO,
   ): Promise<{ libraries: Library[]; total: number }>;
   getLibraryById(id: string): Promise<Library | null>;
+  getLibraryByIdWithTransaction(
+    tx: Prisma.TransactionClient,
+    id: string,
+  ): Promise<Library | null>;
   deleteLibrary(id: string): Promise<void>;
 
   // Library Mood

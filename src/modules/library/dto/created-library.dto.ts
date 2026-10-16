@@ -7,14 +7,14 @@ export const createLibrarySchema = z.object({
     .string("Description is required")
     .nonempty("Description is required"),
 
-  imageUrl: z
-    .string("Image URL is required")
-    .url("Invalid image URL")
-    .nonempty("Image URL is required"),
+  // imageUrl: z
+  //   .string("Image URL is required")
+  //   .url("Invalid image URL")
+  //   .nonempty("Image URL is required"),
 
   content: z.string().optional(),
 
-  url: z.string().url("Invalid URL").optional(),
+  // url: z.string().url("Invalid URL").optional(),
 
   categoryId: z
     .string("Category ID is required")

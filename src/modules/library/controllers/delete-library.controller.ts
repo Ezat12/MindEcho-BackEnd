@@ -2,7 +2,9 @@ import type { Request, Response } from "express";
 import type { DeleteLibraryService } from "../services/delete-library.service.js";
 
 export class DeleteLibraryController {
-  constructor(private readonly deleteLibraryService: DeleteLibraryService) {}
+  constructor(private readonly deleteLibraryService: DeleteLibraryService) {
+    this.handle = this.handle.bind(this);
+  }
 
   async handle(req: Request, res: Response) {
     const { id } = req.params;

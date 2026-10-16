@@ -4,7 +4,9 @@ import type { GetAllLibraryService } from "../services/get-all-library.service.j
 import type { PaginationLibraryDTO } from "../dto/pagination-library.dto.js";
 
 export class GetAllLibraryController {
-  constructor(private readonly getAllLibraryService: GetAllLibraryService) {}
+  constructor(private readonly getAllLibraryService: GetAllLibraryService) {
+    this.handle = this.handle.bind(this);
+  }
 
   async handle(req: Request, res: Response) {
     const queryParams = res.locals.query as PaginationLibraryDTO;

@@ -49,7 +49,7 @@ export class CreateLibraryService {
 
         await this.repoLibrary.createLibraryMood(tx, data.moodIds, library.id);
 
-        return library;
+        return await this.repoLibrary.getLibraryByIdWithTransaction(tx, library.id);
       });
     } catch (error) {
       await this.repoUpload.deleteAttachment("IMAGE", uploadedImage!.publicId);

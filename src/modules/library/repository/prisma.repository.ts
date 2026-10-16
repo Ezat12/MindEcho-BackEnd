@@ -27,6 +27,14 @@ export class PrismaLibraryRepository implements ILibrary {
         urlPublicId,
         categoryId: data.categoryId,
       },
+      include: {
+        category: true,
+        libraryMood: {
+          include: {
+            mood: true,
+          },
+        },
+      },
     });
 
     return library;
@@ -75,6 +83,14 @@ export class PrismaLibraryRepository implements ILibrary {
         ...(resourcePublicId !== null && {
           urlPublicId: resourcePublicId,
         }),
+      },
+      include: {
+        category: true,
+        libraryMood: {
+          include: {
+            mood: true,
+          },
+        },
       },
     });
 
@@ -128,6 +144,14 @@ export class PrismaLibraryRepository implements ILibrary {
         orderBy: {
           [query.sort]: query.order,
         },
+        include: {
+          category: true,
+          libraryMood: {
+            include: {
+              mood: true,
+            },
+          },
+        },
       }),
       prisma.library.count({
         where,
@@ -140,9 +164,34 @@ export class PrismaLibraryRepository implements ILibrary {
   async getLibraryById(id: string): Promise<Library | null> {
     const library = await prisma.library.findUnique({
       where: { id },
+      include: {
+        category: true,
+        libraryMood: {
+          include: {
+            mood: true,
+          },
+        },
+      },
     });
 
     return library;
+  }
+
+  async getLibraryByIdWithTransaction(
+    tx: Prisma.TransactionClient,
+    id: string,
+  ): Promise<Library | null> {
+    return tx.library.findUnique({
+      where: { id },
+      include: {
+        category: true,
+        libraryMood: {
+          include: {
+            mood: true,
+          },
+        },
+      },
+    });
   }
 
   async deleteLibrary(id: string): Promise<void> {

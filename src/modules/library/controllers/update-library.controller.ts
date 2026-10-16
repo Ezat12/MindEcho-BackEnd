@@ -2,7 +2,9 @@ import type { Request, Response } from "express";
 import type { UpdateLibraryService } from "../services/update-library.service.js";
 
 export class UpdateLibraryController {
-  constructor(private readonly updateLibraryService: UpdateLibraryService) {}
+  constructor(private readonly updateLibraryService: UpdateLibraryService) {
+    this.handle = this.handle.bind(this);
+  }
 
   async handle(req: Request, res: Response) {
     const { id } = req.params;

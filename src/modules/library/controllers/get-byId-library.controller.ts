@@ -2,7 +2,9 @@ import type { Request, Response } from "express";
 import type { GetByIdLibraryService } from "../services/get-byId-library.service.js";
 
 export class GetByIdLibraryController {
-  constructor(private readonly getByIdLibraryService: GetByIdLibraryService) {}
+  constructor(private readonly getByIdLibraryService: GetByIdLibraryService) {
+    this.handle = this.handle.bind(this);
+  }
 
   async handle(req: Request, res: Response) {
     const { id } = req.params;

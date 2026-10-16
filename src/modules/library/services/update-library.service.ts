@@ -30,8 +30,6 @@ export class UpdateLibraryService {
 
     await this.validateCategoryExists(data.categoryId);
 
-
-
     // 3. If moodIds are part of update
     await this.validateMoodsExist(data.moodIds);
 
@@ -64,7 +62,10 @@ export class UpdateLibraryService {
           await this.repoLibrary.createLibraryMood(tx, data.moodIds, id);
         }
 
-        return library;
+        return await this.repoLibrary.getLibraryByIdWithTransaction(
+          tx,
+          library.id,
+        );
       });
 
       // 6. Delete old Cloudinary files AFTER DB update succeeds

@@ -4,7 +4,9 @@ import type { CreateLibraryService } from "../services/create-library.service.js
 import { AppError } from "shared/errors/app-error.js";
 
 export class CreateLibraryController {
-  constructor(private readonly createLibraryService: CreateLibraryService) {}
+  constructor(private readonly createLibraryService: CreateLibraryService) {
+    this.handle = this.handle.bind(this);
+  }
 
   async handle(req: Request, res: Response) {
     const data = res.locals.body;

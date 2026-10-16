@@ -10,6 +10,7 @@ const allowedMimeTypes = [
   "image/png",
   "image/webp",
   "image/avif",
+  "image/jfif",
   "video/mp4",
   "video/webm",
 ];
