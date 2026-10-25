@@ -24,6 +24,7 @@ model users {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  doctors Doctors?
   journals journals[]
 }
 
@@ -117,11 +118,37 @@ model libraryMood {
 
 model Doctors {
   id    String  @id @default(cuid())
+  userId  String  @unique
   name  String  
-  bio   String
-
+  bio   String?
+  price Decimal
+  sessionDurationMinutes Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  doctorSpecializations DoctorSpecialization[]
+  user users @relation(fields: [userId] , references: [id] , onDelete: Cascade)
+}
 
+
+model Specializations {
+  id  String  @id @default(cuid())
+  name  String  @unique
+  slug  String  @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  doctorSpecializations DoctorSpecialization[]
+}
+
+
+model DoctorSpecialization {
+  id    String  @id @default(cuid())
+  doctorId  String
+  specializationId  String
+
+  doctor Doctors @relation(fields: [doctorId] , references: [id] , onDelete: Cascade)
+  specialization Specializations @relation(fields: [specializationId] , references: [id] , onDelete: Cascade)
+
+  @@unique([doctorId , specializationId])
 }
