@@ -1,6 +1,6 @@
 
 
-SELECT * FROM  library;
+SELECT * FROM  users;
 
 -- UPDATE users SET role = 'ADMIN' WHERE id = 'cmo8r0bi70000tpuso5atcht4'
 

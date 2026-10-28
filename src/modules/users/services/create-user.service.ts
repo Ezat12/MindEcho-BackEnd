@@ -2,6 +2,7 @@ import { AppError } from "../../../shared/errors/app-error.js";
 import type { CreateUserDTO } from "../dto/create-user.dto.js";
 import type { User } from "../domain/user.js";
 import type { IUserRepository } from "../repositories/user-repository.js";
+import bcrypt from "bcryptjs/index.js";
 
 export class CreateUserService {
   constructor(private readonly userRepository: IUserRepository) {}
@@ -9,10 +10,17 @@ export class CreateUserService {
   async execute(data: CreateUserDTO): Promise<User> {
     const existingUser = await this.userRepository.findByEmail(data.email);
 
+    const hashedPassword = await bcrypt.hash(data.password, 10);
+
+    const userData = {
+      ...data,
+      password: hashedPassword,
+    };
+
     if (existingUser) {
       throw new AppError("Email already registered", 409);
     }
 
-    return await this.userRepository.create(data);
+    return await this.userRepository.create(userData);
   }
 }

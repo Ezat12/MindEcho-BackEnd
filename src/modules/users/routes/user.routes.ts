@@ -10,6 +10,9 @@ import { validate } from "../../../middlewares/validate-zod.js";
 import { createUserSchema } from "../dto/create-user.dto.js";
 import { IdParamSchema } from "../dto/id-params.schema.js";
 import { UpdateUserSchema } from "../dto/update-user.dto.js";
+import { protectAuth } from "middlewares/protectAuth.js";
+import { PrismaAuthRepository } from "modules/auth/repository/prisma-repository.js";
+import { allowedTo } from "middlewares/allowedTo.js";
 
 const userRoutes = Router();
 
@@ -19,19 +22,42 @@ const getByIdUserController = MakeGetByIdUserController();
 const updateUserController = MakeUpdateUserController();
 const deleteUserController = MakeDeleteUserController();
 
+const authRepository = new PrismaAuthRepository();
+
 userRoutes
   .route("/")
-  .post(validate(createUserSchema), createUserController.handle)
-  .get(getAllUsersController.handle);
+
+  .post(
+    validate(createUserSchema, "body"),
+    protectAuth(authRepository),
+    allowedTo(["ADMIN"]),
+    createUserController.handle,
+  )
+  .get(
+    protectAuth(authRepository),
+    allowedTo(["ADMIN"]),
+    getAllUsersController.handle,
+  );
 
 userRoutes
   .route("/:id")
-  .get(validate(IdParamSchema, "params"), getByIdUserController.handle)
+  .get(
+    validate(IdParamSchema, "params"),
+    protectAuth(authRepository),
+    getByIdUserController.handle,
+  )
   .patch(
     validate(IdParamSchema, "params"),
-    validate(UpdateUserSchema),
+    validate(UpdateUserSchema, "body"),
+    protectAuth(authRepository),
+    allowedTo(["ADMIN"]),
     updateUserController.handle,
   )
-  .delete(validate(IdParamSchema, "params"), deleteUserController.handle);
+  .delete(
+    protectAuth(authRepository),
+    allowedTo(["ADMIN"]),
+    validate(IdParamSchema, "params"),
+    deleteUserController.handle,
+  );
 
 export { userRoutes };

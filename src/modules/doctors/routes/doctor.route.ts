@@ -39,6 +39,7 @@ routerDoctor.post(
 routerDoctor.get(
   "/",
   protectAuth(prismaAuthRepository),
+
   validate(paginationDoctorSchema, "query"),
   getAllDoctorsController.handle,
 );
@@ -53,7 +54,7 @@ routerDoctor.get(
 routerDoctor.put(
   "/:id",
   protectAuth(prismaAuthRepository),
-  allowedTo(["ADMIN"]),
+  allowedTo(["ADMIN", "DOCTOR"]),
   validate(IdParamSchema, "params"),
   validate(updateDoctorSchema),
   updateDoctorController.handle,

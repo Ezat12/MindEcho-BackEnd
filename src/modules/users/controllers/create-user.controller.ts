@@ -10,7 +10,7 @@ export class CreateUserController {
   async handle(req: Request, res: Response) {
     // const data = createUserSchema.parse(req.body);
 
-    const data = req.body;
+    const data = res.locals.body;
 
     const user = await this.createUserService.execute(data);
 

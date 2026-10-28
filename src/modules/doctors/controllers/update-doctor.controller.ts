@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import type { UpdateDoctorService } from "../services/update-doctor.service.js";
+import type { Role } from "@prisma/client";
 
 export class UpdateDoctorController {
   constructor(private readonly updateDoctorService: UpdateDoctorService) {
@@ -10,7 +11,15 @@ export class UpdateDoctorController {
     const data = res.locals.body;
     const { id } = req.params;
 
-    const doctor = await this.updateDoctorService.execute(String(id), data);
+    const userId = req.user?.id;
+    const role: Role = req.user?.role;
+
+    const doctor = await this.updateDoctorService.execute(
+      String(id),
+      userId,
+      role,
+      data,
+    );
 
     res.status(200).json({
       status: "success",

@@ -5,7 +5,7 @@ export const createUserSchema = z.object({
     .string("Email is required")
     .email("Invalid email address")
     .nonempty("Email is required"),
-  password : z
+  password: z
     .string("Password is required")
     .min(6, "Password must be at least 6 characters long")
     .max(100, "Password must be at most 100 characters long")
@@ -15,6 +15,12 @@ export const createUserSchema = z.object({
     .min(2, "Name must be at least 2 characters long")
     .max(100, "Name must be at most 100 characters long")
     .nonempty("Name is required"),
+  role: z
+    .enum(
+      ["ADMIN", "USER", "DOCTOR"],
+      "Role must be either 'ADMIN', 'USER', or 'DOCTOR'",
+    )
+    .optional(),
   avatarUrl: z
     .string("Avatar URL is required")
     .url("Invalid avatar URL")
