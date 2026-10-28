@@ -59,7 +59,7 @@ routerDoctorSpecialization.get(
 routerDoctorSpecialization.delete(
   "/by-doctor/:doctorId/specialization/:specializationId",
   protectAuth(prismaAuthRepository),
-  allowedTo(["ADMIN"]),
+  allowedTo(["ADMIN", "DOCTOR"]),
   validate(doctorSpecializationPairParamSchema, "params"),
   removeSpecializationByPairController.handle,
 );
