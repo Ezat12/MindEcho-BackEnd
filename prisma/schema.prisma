@@ -119,7 +119,6 @@ model libraryMood {
 model Doctors {
   id    String  @id @default(cuid())
   userId  String  @unique
-  // name  String  
   bio   String?
   price Decimal
   sessionDurationMinutes Int
@@ -127,6 +126,8 @@ model Doctors {
   updatedAt DateTime @updatedAt
 
   doctorSpecializations DoctorSpecialization[]
+  doctorAvailability DoctorAvailability[]
+  doctorDayOff DoctorDayOff[]
   user users @relation(fields: [userId] , references: [id] , onDelete: Cascade)
 }
 
@@ -151,4 +152,34 @@ model DoctorSpecialization {
   specialization Specializations @relation(fields: [specializationId] , references: [id] , onDelete: Cascade)
 
   @@unique([doctorId , specializationId])
+}
+
+model DoctorAvailability {
+  id    String  @id @default(cuid())
+  doctorId  String
+  dayOfWeek Int
+  startTime DateTime @db.Time
+  endTime DateTime @db.Time
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  doctor Doctors @relation(fields: [doctorId] , references: [id] , onDelete: Cascade)
+
+  @@unique([doctorId , dayOfWeek , startTime , endTime])
+}
+
+
+model DoctorDayOff {
+  id    String  @id @default(cuid())
+  doctorId  String
+  date DateTime  @db.Date
+  reason String?
+  startTime DateTime?
+  endTime DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  doctor Doctors @relation(fields: [doctorId] , references: [id] , onDelete: Cascade)
+
+  @@unique([doctorId , date])
 }
