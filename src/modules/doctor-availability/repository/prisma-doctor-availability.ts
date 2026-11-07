@@ -25,8 +25,8 @@ export class PrismaDoctorAvailabilityRepository implements IDoctorAvailabilityRe
       data: {
         doctorId: data.doctorId,
         dayOfWeek: data.dayOfWeek,
-        startTime: new Date(`1970-01-01T${data.startTime}`),
-        endTime: new Date(`1970-01-01T${data.endTime}`),
+        startTime: new Date(`1970-01-01T${data.startTime}:00.000Z`),
+        endTime: new Date(`1970-01-01T${data.endTime}:00.000Z`),
       },
     });
 
@@ -49,6 +49,18 @@ export class PrismaDoctorAvailabilityRepository implements IDoctorAvailabilityRe
     const availabilities = await prisma.doctorAvailability.findMany({
       where: { doctorId },
       orderBy: [{ dayOfWeek: "asc" }, { startTime: "asc" }],
+    });
+
+    return availabilities.map((item) => this.toDomain(item));
+  }
+
+  async getDoctorAvailabilityByDay(
+    doctorId: string,
+    dayOfWeek: number,
+  ): Promise<DoctorAvailability[]> {
+    const availabilities = await prisma.doctorAvailability.findMany({
+      where: { doctorId, dayOfWeek },
+      orderBy: [{ startTime: "asc" }],
     });
 
     return availabilities.map((item) => this.toDomain(item));

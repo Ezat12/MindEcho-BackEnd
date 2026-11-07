@@ -13,6 +13,11 @@ export interface IDoctorAvailabilityRepository {
     doctorId: string,
   ): Promise<DoctorAvailability[]>;
 
+  getDoctorAvailabilityByDay(
+    doctorId: string,
+    dayOfWeek: number,
+  ): Promise<DoctorAvailability[]>;
+
   updateDoctorAvailability(
     id: string,
     data: UpdateDoctorAvailabilityInput,
