@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 
-import type { CreateDoctorAvailabilityService } from "../services/create-doctor-availablility.service.js";
+import type { CreateDoctorAvailabilityService } from "../services/create-doctor-availability.service.js";
 
 export class CreateDoctorAvailabilityController {
   constructor(

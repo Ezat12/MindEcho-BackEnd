@@ -9,6 +9,7 @@ import { libraryRoutes } from "../modules/library/routes/index.route.js";
 import { specializationsRoutes } from "../modules/specializations/routes/specialization.route.js";
 import { doctorsRoutes } from "../modules/doctors/routes/doctor.route.js";
 import { doctorSpecializationRoutes } from "../modules/doctor-specialization/routes/doctor-specialization.route.js";
+import { doctorAvailabilityRoutes } from "../modules/doctor-availability/routes/doctor-availability.route.js";
 
 const router = Router();
 
@@ -29,5 +30,7 @@ router.use("/specializations", specializationsRoutes);
 router.use("/doctors", doctorsRoutes);
 
 router.use("/doctor-specializations", doctorSpecializationRoutes);
+
+router.use("/doctor-availability", doctorAvailabilityRoutes);
 
 export { router };

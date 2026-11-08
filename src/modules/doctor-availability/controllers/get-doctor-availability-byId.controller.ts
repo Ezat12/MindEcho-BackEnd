@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import type { GetDoctorAvailabilityByIdService } from "../services/get-doctor-availability-byId.service.js";
 
-export class GetDoctorAvailabilityByIdControllers {
+export class GetDoctorAvailabilityByIdController {
   constructor(
     private readonly getDoctorAvailabilityByIdService: GetDoctorAvailabilityByIdService,
   ) {}
