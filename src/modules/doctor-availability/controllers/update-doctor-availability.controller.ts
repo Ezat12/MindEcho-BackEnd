@@ -21,6 +21,12 @@ export class UpdateDoctorAvailabilityController {
         role,
       );
 
-    res.status(200).json({ status: "success", data: updatedAvailability });
+    res
+      .status(200)
+      .json({
+        status: "success",
+        message: "Doctor availability updated successfully",
+        data: updatedAvailability,
+      });
   }
 }
