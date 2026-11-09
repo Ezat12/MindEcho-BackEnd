@@ -5,7 +5,9 @@ import type { GetAllDoctorAvailabilityService } from "../services/get-all-doctor
 export class GetAllDoctorAvailabilityController {
   constructor(
     private readonly getAllDoctorAvailabilityService: GetAllDoctorAvailabilityService,
-  ) {}
+  ) {
+    this.handle = this.handle.bind(this);
+  }
 
   async handle(req: Request, res: Response): Promise<void> {
     const doctorId = req.params.doctorId;

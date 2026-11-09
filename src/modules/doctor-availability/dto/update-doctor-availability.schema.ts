@@ -11,15 +11,15 @@ export const updateDoctorAvailabilitySchema = z
 
     startTime: z.iso
       .time({
-        precision: 0,
-        error: "Start time must be in HH:mm:ss format",
+        precision: -1,
+        error: "Start time must be in HH:mm format",
       })
       .optional(),
 
     endTime: z.iso
       .time({
-        precision: 0,
-        error: "End time must be in HH:mm:ss format",
+        precision: -1,
+        error: "End time must be in HH:mm format",
       })
       .optional(),
   })

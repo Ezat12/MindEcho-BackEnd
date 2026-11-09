@@ -10,7 +10,7 @@ export class GetAllDoctorAvailabilityService {
   ) {}
 
   async execute(doctorId: string): Promise<DoctorAvailability[]> {
-    const exitingDoctor = await this.doctorRepository.findByUserId(doctorId);
+    const exitingDoctor = await this.doctorRepository.getDoctorById(doctorId);
 
     if (!exitingDoctor) {
       throw new AppError("Doctor not found", 404);

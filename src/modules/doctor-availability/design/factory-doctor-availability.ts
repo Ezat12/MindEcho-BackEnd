@@ -12,6 +12,8 @@ import { DeleteDoctorAvailabilityService } from "../services/delete-doctor-avail
 import { GetAllDoctorAvailabilityService } from "../services/get-all-doctor-availability.service.js";
 import { GetDoctorAvailabilityByIdService } from "../services/get-doctor-availability-byId.service.js";
 import { UpdateDoctorAvailabilityService } from "../services/update-doctor-availability.service.js";
+import { GetMyDoctorAvailabilityService } from "../services/get-my-doctor-availability.service.js";
+import { GetMyDoctorAvailabilityController } from "../controllers/get-my-doctor-availability.controller.js";
 
 const doctorAvailabilityRepository = new PrismaDoctorAvailabilityRepository();
 
@@ -41,6 +43,15 @@ export const MakeGetDoctorAvailabilityByIdController = () => {
   );
 
   return new GetDoctorAvailabilityByIdController(service);
+};
+
+export const MakeGetMyDoctorAvailabilityController = () => {
+  const service = new GetMyDoctorAvailabilityService(
+    doctorAvailabilityRepository,
+    doctorRepository,
+  );
+
+  return new GetMyDoctorAvailabilityController(service);
 };
 
 export const MakeUpdateDoctorAvailabilityController = () => {

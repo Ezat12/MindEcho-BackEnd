@@ -4,7 +4,9 @@ import type { DeleteDoctorAvailabilityService } from "../services/delete-doctor-
 export class DeleteDoctorAvailabilityController {
   constructor(
     private readonly deleteDoctorAvailabilityService: DeleteDoctorAvailabilityService,
-  ) {}
+  ) {
+    this.handle = this.handle.bind(this);
+  }
 
   async handle(req: Request, res: Response): Promise<void> {
     const { doctorAvailabilityId } = req.params;

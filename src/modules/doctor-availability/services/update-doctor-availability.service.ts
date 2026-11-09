@@ -17,6 +17,8 @@ export class UpdateDoctorAvailabilityService {
     userId: string,
     role: Role,
   ): Promise<DoctorAvailability> {
+
+    console.log("ID" , id);
     // 1. Check if availability exists
     const availability =
       await this.doctorAvailabilityRepository.getDoctorAvailabilityById(id);

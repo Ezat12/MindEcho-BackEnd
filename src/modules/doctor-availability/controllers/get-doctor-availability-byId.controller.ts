@@ -4,7 +4,9 @@ import type { GetDoctorAvailabilityByIdService } from "../services/get-doctor-av
 export class GetDoctorAvailabilityByIdController {
   constructor(
     private readonly getDoctorAvailabilityByIdService: GetDoctorAvailabilityByIdService,
-  ) {}
+  ) {
+    this.handle = this.handle.bind(this);
+  }
 
   async handle(req: Request, res: Response): Promise<void> {
     const { doctorAvailabilityId } = req.params;

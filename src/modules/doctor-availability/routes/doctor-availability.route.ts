@@ -5,6 +5,7 @@ import {
   MakeDeleteDoctorAvailabilityController,
   MakeGetAllDoctorAvailabilityController,
   MakeGetDoctorAvailabilityByIdController,
+  MakeGetMyDoctorAvailabilityController,
   MakeUpdateDoctorAvailabilityController,
 } from "../design/factory-doctor-availability.js";
 
@@ -35,6 +36,9 @@ const updateDoctorAvailabilityController =
 const deleteDoctorAvailabilityController =
   MakeDeleteDoctorAvailabilityController();
 
+const getMyDoctorAvailabilityController =
+  MakeGetMyDoctorAvailabilityController();
+
 const prismaAuthRepository = new PrismaAuthRepository();
 
 // Create availability
@@ -54,6 +58,14 @@ routerDoctorAvailability.get(
   getAllDoctorAvailabilityController.handle,
 );
 
+// Get my availability
+routerDoctorAvailability.get(
+  "/my-availability",
+  protectAuth(prismaAuthRepository),
+  allowedTo(["DOCTOR"]),
+  getMyDoctorAvailabilityController.handle,
+);
+
 // Get availability by ID
 routerDoctorAvailability.get(
   "/:doctorAvailabilityId",
@@ -67,7 +79,7 @@ routerDoctorAvailability.put(
   "/:doctorAvailabilityId",
   protectAuth(prismaAuthRepository),
   allowedTo(["ADMIN", "DOCTOR"]),
-  validate(updateDoctorAvailabilitySchema , "body"),
+  validate(updateDoctorAvailabilitySchema, "body"),
   validate(doctorAvailabilityIdParamSchema, "params"),
   updateDoctorAvailabilityController.handle,
 );

@@ -22,7 +22,7 @@ export class CreateDoctorAvailabilityService {
       throw new AppError("Doctor not found", 404);
     }
 
-    if (role !== "ADMIN" && doctor.userId !== userId) {
+    if (role !== "ADMIN" && doctor.userId.toString() !== userId.toString()) {
       throw new AppError(
         "Unauthorized to create availability for this doctor",
         403,

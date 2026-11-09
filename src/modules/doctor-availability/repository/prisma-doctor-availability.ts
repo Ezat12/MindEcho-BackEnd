@@ -77,10 +77,10 @@ export class PrismaDoctorAvailabilityRepository implements IDoctorAvailabilityRe
           dayOfWeek: data.dayOfWeek,
         }),
         ...(data.startTime !== undefined && {
-          startTime: new Date(`1970-01-01T${data.startTime}`),
+          startTime: new Date(`1970-01-01T${data.startTime}:00.000Z`),
         }),
         ...(data.endTime !== undefined && {
-          endTime: new Date(`1970-01-01T${data.endTime}`),
+          endTime: new Date(`1970-01-01T${data.endTime}:00.000Z`),
         }),
       },
     });
