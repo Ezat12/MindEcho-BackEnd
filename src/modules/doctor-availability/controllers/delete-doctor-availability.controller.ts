@@ -17,11 +17,9 @@ export class DeleteDoctorAvailabilityController {
       req.user.role,
     );
 
-    res
-      .status(204)
-      .json({
-        status: "success",
-        message: "Doctor availability deleted successfully",
-      });
+    res.status(200).json({
+      status: "success",
+      message: "Doctor availability deleted successfully",
+    });
   }
 }
