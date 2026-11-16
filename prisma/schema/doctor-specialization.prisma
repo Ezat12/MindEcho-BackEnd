@@ -1,0 +1,10 @@
+model DoctorSpecialization {
+  id    String  @id @default(cuid())
+  doctorId  String
+  specializationId  String
+
+  doctor Doctors @relation(fields: [doctorId] , references: [id] , onDelete: Cascade)
+  specialization Specializations @relation(fields: [specializationId] , references: [id] , onDelete: Cascade)
+
+  @@unique([doctorId , specializationId])
+}

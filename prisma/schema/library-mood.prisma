@@ -1,0 +1,10 @@
+model libraryMood {
+  id      String  @id @default(cuid())
+  moodId    String
+  libraryId  String
+
+  mood moods @relation(fields: [moodId] , references: [id] , onDelete: Cascade )
+  library library @relation(fields: [libraryId] , references: [id]  , onDelete: Cascade)
+
+  @@unique([moodId , libraryId])
+}

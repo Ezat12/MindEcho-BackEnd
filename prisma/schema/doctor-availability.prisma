@@ -1,0 +1,13 @@
+model DoctorAvailability {
+  id    String  @id @default(cuid())
+  doctorId  String
+  dayOfWeek Int
+  startTime DateTime @db.Time
+  endTime DateTime @db.Time
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  doctor Doctors @relation(fields: [doctorId] , references: [id] , onDelete: Cascade)
+
+  @@unique([doctorId , dayOfWeek , startTime , endTime])
+}

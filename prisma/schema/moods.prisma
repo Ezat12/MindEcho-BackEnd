@@ -1,0 +1,10 @@
+model moods {
+  id          String  @id @default(cuid())
+  name        String  @unique
+  slug        String  @unique
+  icon        String?
+  description String?
+
+  journals journals[]
+  libraryMood libraryMood[]
+}

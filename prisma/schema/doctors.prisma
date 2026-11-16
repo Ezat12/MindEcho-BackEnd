@@ -1,0 +1,14 @@
+model Doctors {
+  id    String  @id @default(cuid())
+  userId  String  @unique
+  bio   String?
+  price Decimal
+  sessionDurationMinutes Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  doctorSpecializations DoctorSpecialization[]
+  doctorAvailability DoctorAvailability[]
+  doctorDayOff DoctorDayOff[]
+  user users @relation(fields: [userId] , references: [id] , onDelete: Cascade)
+}

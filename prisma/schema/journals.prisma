@@ -1,0 +1,13 @@
+model journals {
+  id        String   @id @default(cuid())
+  userId    String
+  moodId    String?
+  title     String
+  content   String
+  attachments JournalAttachment[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user users  @relation(fields: [userId], references: [id] , onDelete : Cascade)
+  mood moods? @relation(fields: [moodId], references: [id] , onDelete: SetNull)
+}

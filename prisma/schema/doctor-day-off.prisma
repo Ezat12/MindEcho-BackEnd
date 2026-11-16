@@ -1,0 +1,14 @@
+model DoctorDayOff {
+  id    String  @id @default(cuid())
+  doctorId  String
+  date DateTime  @db.Date
+  reason String?
+  startTime DateTime?
+  endTime DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  doctor Doctors @relation(fields: [doctorId] , references: [id] , onDelete: Cascade)
+
+  @@unique([doctorId , date])
+}
